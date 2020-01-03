@@ -10,12 +10,30 @@ import UIKit
 
 class ViewController: UIViewController {
 
-    @IBOutlet var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet var welcomeLabel: UILabel!
+    @IBOutlet weak var logo: UIImageView!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     private var data = [Model]()
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        //inicializacion de alfa y posicion pre-animacion
         activityIndicator.startAnimating()
+        logo.alpha = 0
+        logo.transform = CGAffineTransform(translationX: 0, y: -20)
+        welcomeLabel.alpha = 0
         chargeData()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        //animacion
+        UIView.animate(withDuration: 1, delay: 0, options: UIView.AnimationOptions.curveEaseOut, animations: {
+            self.logo.alpha = 1
+            self.logo.transform = CGAffineTransform(translationX: 0, y: 0)
+            self.welcomeLabel.alpha = 1
+
+        }, completion: nil)
     }
     
     //MARK: - Funcion de llamada del ViewModel
