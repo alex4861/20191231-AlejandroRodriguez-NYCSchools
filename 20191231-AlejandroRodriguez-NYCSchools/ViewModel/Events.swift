@@ -43,7 +43,7 @@ class Events {
     func getDetail(dbn: String, completion: @escaping (Any?) -> Void){
         let urlRequest = "\(Constants.BASE_URL_DETAIL)?dbn=\(dbn)"
         url = URL(string: urlRequest)
-        print(url)
+        print(url!)
 
         let task = session.dataTask(with: url!){ data, response, error in
           
