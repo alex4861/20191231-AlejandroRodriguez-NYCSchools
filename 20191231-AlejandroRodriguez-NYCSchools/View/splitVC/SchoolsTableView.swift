@@ -9,6 +9,8 @@
 import UIKit
 
 class SchoolsTableView: UITableViewController {
+   
+    
 
     
     var data = [Model]()
@@ -17,21 +19,15 @@ class SchoolsTableView: UITableViewController {
         super.viewDidLoad()
         tableView.register(UINib(nibName: "TableRow", bundle: nil), forCellReuseIdentifier: "TableRow")
         tableView.rowHeight = UITableView.automaticDimension
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
 
     // MARK: - Table view data source
-
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-           return (self.data.count)
+           return data.count
        }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -56,6 +52,8 @@ class SchoolsTableView: UITableViewController {
                     }
                 }
                 else{
+                    //muestra mensaje de error si la escuela seleccionada no esta en la base de datos
+
                     DispatchQueue.main.async {
                         self.alert(message: "This school haven't SAT data")
                     }
@@ -63,8 +61,12 @@ class SchoolsTableView: UITableViewController {
 
 
             }
+                
+                //muestra mensaje de error si falla el fetch
             else{
-                self.alert(message: data as! String)
+                DispatchQueue.main.async {
+                    self.alert(message: data as! String)
+                }
             }
         }
     }
@@ -80,7 +82,6 @@ class SchoolsTableView: UITableViewController {
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let detailVC = segue.destination as? PrincipalViewController{
-            print("simon")
             detailVC.data = Detaildata
         }
     }
